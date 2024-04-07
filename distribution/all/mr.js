@@ -1,5 +1,3 @@
-const id= require('../util/id');
-
 const mr = function(config) {
   let context = {};
   context.gid = config.gid || 'all';

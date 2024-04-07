@@ -38,7 +38,8 @@ if (args.config) {
 }
 
 // const [arg1, arg2] = await Promise(resolve => {
-//   distribution.local.routes.put(mapperReducer, 'mapperReducer',(result1, result2) => {
+//   distribution.local.routes.put
+//   (mapperReducer, 'mapperReducer',(result1, result2) => {
 //     resolve([result1, result2]);
 //   });
 // });
