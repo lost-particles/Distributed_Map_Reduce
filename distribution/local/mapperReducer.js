@@ -18,23 +18,27 @@ const mapperReducer = {
         }
         resCount++;
         if (resCount === recordCount) {
-          this.compact(mapperOut, (e, v)=>{
-            // store.put(v, {gid: gid, key: 'mappedOut_'+util.id.getID(keys)},
-            // (e, v)=>{
-            //   callback(null, 'done');
-            // });
-
-            mem.put(v, {gid: gid, key: 'mapOut'}, (e, v)=>{
-              callback(null, 'done');
+          if (gid === 'ncdc') {
+            this.compact(mapperOut, (e, v)=>{
+              mem.put(v, {gid: gid, key: 'mapOut'}, (e, v)=>{
+                callback(null, 'done');
+              });
             });
-          });
+          } else {
+            this.compactV2(mapperOut, (e, v)=>{
+              mem.put(v, {gid: gid, key: 'mapOut'}, (e, v)=>{
+                callback(null, 'done');
+              });
+            });
+          }
         }
       });
     });
   },
 
   compact: function(mapperOut, callback) {
-    compactedOut = {};
+    console.log('before compaction : '+ JSON.stringify(mapperOut));
+    const compactedOut = {};
     mapperOut.forEach((obj)=>{
       let objKey = Object.keys(obj)[0];
       if (objKey in compactedOut) {
@@ -42,6 +46,23 @@ const mapperReducer = {
       } else {
         compactedOut[objKey] = [obj[objKey]];
       }
+    });
+    console.log('After Compaction : '+ JSON.stringify(compactedOut));
+    callback(null, compactedOut);
+  },
+
+  compactV2: function(mapperOut, callback) {
+    const compactedOut = {};
+    mapperOut.forEach((arr)=>{
+      arr.forEach((ele)=>{
+        Object.entries(ele).forEach(([k, v])=>{
+          if (k in compactedOut) {
+            compactedOut[k].push(v);
+          } else {
+            compactedOut[k] = [v];
+          }
+        });
+      });
     });
     callback(null, compactedOut);
   },
