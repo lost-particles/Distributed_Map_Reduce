@@ -2,6 +2,7 @@
 
 const util = require('./distribution/util/util.js');
 const args = require('yargs').argv;
+// const mapperReducer = require('./distribution/local/mapperReducer');
 
 // Default configuration
 global.nodeConfig = global.nodeConfig || {
@@ -35,6 +36,12 @@ if (args.config) {
   global.nodeConfig.onStart = nodeConfig.onStart ?
         nodeConfig.onStart : global.nodeConfig.onStart;
 }
+
+// const [arg1, arg2] = await Promise(resolve => {
+//   distribution.local.routes.put(mapperReducer, 'mapperReducer',(result1, result2) => {
+//     resolve([result1, result2]);
+//   });
+// });
 
 const distribution = {
   util: require('./distribution/util/util.js'),

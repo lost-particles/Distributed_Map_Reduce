@@ -3,6 +3,7 @@ const url = require('url');
 
 let local = require('../local/local');
 const serialization = require('../util/serialization');
+const mapperReducer = require('./mapperReducer');
 
 /*
     The start function will be called to start your node.
@@ -138,7 +139,9 @@ const start = function(onStart) {
 
   server.listen(global.nodeConfig.port, global.nodeConfig.ip, () => {
     console.log(`Server running at http://${global.nodeConfig.ip}:${global.nodeConfig.port}/`);
-    onStart(server);
+    local.routes.put(mapperReducer, 'mapperReducer', (e, v)=>{
+      onStart(server);
+    });
   });
 };
 

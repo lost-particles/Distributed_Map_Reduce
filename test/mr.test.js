@@ -7,6 +7,7 @@ const groupsTemplate = require('../distribution/all/groups');
 const ncdcGroup = {};
 const dlibGroup = {};
 
+
 /*
    This hack is necessary since we can not
    gracefully stop the local listening node.
